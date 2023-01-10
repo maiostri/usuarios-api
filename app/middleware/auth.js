@@ -7,9 +7,7 @@ import config from "../config/index.js";
 // RES -> Response
 export const signup = (req, res) => {
   // Pegamos os dados do request e criamos o modelo.
-  console.log(req.body.email);
-  console.log(req.body.nome);
-  console.log(req.body.senha);
+  
   const user = new User({
     email: req.body.email,
     nome: req.body.nome,
@@ -46,6 +44,25 @@ export const login = (req, res) => {
       email: user.email,
       accessToken: token,
     });
+  });
+};
+
+
+export const validaHeader = (req, res, next) => {
+  let token = req.get('X-token');
+
+  console.log(token);
+
+  if (!token) {
+    return res.status(403).send({ message: "Você nao me engana de novo." });
+  }
+
+  jwt.verify(token, config.SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({ message: "Você não me engana" });
+    }
+
+    next();
   });
 };
 

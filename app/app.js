@@ -1,7 +1,13 @@
 import express from "express";
 import init from "./database/init.js";
 import cors from "cors";
-import { signup, login, valida } from "./middleware/auth.js";
+import { signup, login, valida, validaHeader } from "./middleware/auth.js";
+import {
+  listUsuarios,
+  retornaUser,
+  atualizaUser,
+  removeUser,
+} from "./middleware/users.js";
 import mongoose from "mongoose";
 
 mongoose.Promise = global.Promise;
@@ -43,6 +49,13 @@ app.listen(PORT, () => console.log("subiuuuu!"));
 // É permitido ter uma lista de middleware
 app.post("/signup", signup);
 
+// Get de usuários
+app.get("/usuarios/:id", validaHeader, retornaUser);
+app.get("/usuarios", validaHeader, listUsuarios);
+
+// Put de usuarios
+app.put("/usuarios/:id", validaHeader, atualizaUser);
+app.delete("/usuarios/:id", validaHeader, removeUser);
 
 // Vamos criar o método de login!!!
 app.post("/login", login);
