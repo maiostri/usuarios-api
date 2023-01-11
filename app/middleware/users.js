@@ -26,3 +26,9 @@ export const removeUser = (req, res) => {
     res.status(200).send(user);
   });
 };
+
+export const buscaUserPorNome = (req, res) => {
+  User.find({ nome: { $regex: req.query.nome } }, "_id nome email").exec((err, users) => {
+    res.status(200).send(users);
+  });
+}

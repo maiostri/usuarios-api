@@ -7,6 +7,7 @@ import {
   retornaUser,
   atualizaUser,
   removeUser,
+  buscaUserPorNome
 } from "./middleware/users.js";
 import mongoose from "mongoose";
 
@@ -56,6 +57,9 @@ app.get("/usuarios", validaHeader, listUsuarios);
 // Put de usuarios
 app.put("/usuarios/:id", validaHeader, atualizaUser);
 app.delete("/usuarios/:id", validaHeader, removeUser);
+
+// Busca de usuários
+app.get("/busca", validaHeader, buscaUserPorNome);
 
 // Vamos criar o método de login!!!
 app.post("/login", login);
