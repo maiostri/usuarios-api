@@ -6,6 +6,7 @@ const User = mongoose.model(
     email: String,
     senha: String,
     nome: String,
+    permissao: String
   })
 );
 

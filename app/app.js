@@ -1,13 +1,14 @@
 import express from "express";
 import init from "./database/init.js";
 import cors from "cors";
-import { signup, login, valida, validaHeader } from "./middleware/auth.js";
+import { signup, login, valida, validaHeader, logout } from "./middleware/auth.js";
 import {
   listUsuarios,
   retornaUser,
   atualizaUser,
   removeUser,
-  buscaUserPorNome
+  buscaUserPorNome,
+  atualizaPermissao
 } from "./middleware/users.js";
 import mongoose from "mongoose";
 
@@ -65,3 +66,7 @@ app.get("/busca", validaHeader, buscaUserPorNome);
 app.post("/login", login);
 
 app.post("/valida", valida);
+
+app.put("/permissoes/:id", validaHeader, atualizaPermissao);
+
+app.post("/logout", logout);
